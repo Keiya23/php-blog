@@ -3,6 +3,7 @@
 /**
  * @var ArticleDAO
  */
+require_once("./database/database.php");
 $articleDAO = require_once './database/models/ArticleDAO.php';
 
 
