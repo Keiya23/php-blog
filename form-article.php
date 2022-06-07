@@ -4,6 +4,13 @@
      * @var ArticleDAO
      */
     require_once("./database/database.php");
+    require_once __DIR__.'/database/security.php';
+
+    $currentUser = isLoggedIn();
+
+    if(!$currentUser) {
+        header('Location: /');
+    }
     $articleDAO = require_once './database/models/ArticleDAO.php';
 
     const ERROR_REQUIRED = "Veuillez renseigner ce champ";
@@ -80,6 +87,7 @@
                     'content' => $content,
                     'image' => $image,
                     'id' => $id,
+                    'author' => $currentUser['id']
                 ]);
             } else {
                 // Vous creez un nouvel article
@@ -88,6 +96,7 @@
                     'category' => $category,
                     'content' => $content,
                     'image' => $image,
+                    'author' => $currentUser['id']
                 ]);
             }
 

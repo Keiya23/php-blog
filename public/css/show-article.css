@@ -33,6 +33,13 @@
     color: var(--primary);
 }
 
+.article-author {
+    text-align: right;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-style: italic;
+}
+
 .action {
     margin-top: 2rem;
     display: flex;

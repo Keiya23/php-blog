@@ -42,7 +42,7 @@
 .article {
     flex: 30%;
     margin: 1rem;
-    min-height: 41rem;
+    min-height: 45rem;
     cursor: pointer;
 }
 
@@ -53,6 +53,19 @@
 
 .article:hover .img-container {
     transform: scale(1.2);
+}
+
+.article-author {
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+    padding-right: 5px;
+}
+
+.article-author p{
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-style: italic;
 }
 
 .overflow {
