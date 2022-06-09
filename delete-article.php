@@ -4,9 +4,9 @@
  * @var ArticleDAO
  */
 require_once("./database/database.php");
-require_once __DIR__.'/database/security.php';
+$authDAO = require_once __DIR__.'/database/security.php';
 
-$currentUser = isLoggedIn();
+$currentUser = $authDAO->isLoggedIn();
 
 if(!$currentUser) {
     header('Location: /');

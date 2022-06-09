@@ -1,8 +1,8 @@
 <?php
 
     require __DIR__.'/database/database.php';
-    require __DIR__.'/database/security.php';
-    $currentUser = isLoggedIn();
+    $authDAO = require __DIR__.'/database/security.php';
+    $currentUser = $authDAO->isLoggedIn();
 
     $articleDAO = require_once './database/models/ArticleDAO.php';
     $articles = $articleDAO->getAll();

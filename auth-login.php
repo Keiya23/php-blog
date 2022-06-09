@@ -1,5 +1,6 @@
 <?php 
     $pdo = require_once './database/database.php';
+    $authDAO = require_once './database/security.php';
 
     const ERROR_REQUIRED = 'Veuillez renseigner ce champ';
     const ERROR_EMAIL_INVALID = "L'email n'est pas valide";
@@ -32,12 +33,7 @@
         }
 
         if(empty(array_filter($errors, fn ($e) => $e !== ''))) {
-            $statementUser = $pdo->prepare(
-                'SELECT * FROM user WHERE email=:email'
-            );
-            $statementUser->bindValue(':email', $email);
-            $statementUser->execute();
-            $user = $statementUser->fetch();
+            $user = $authDAO->getUserFromEmail($email);
 
             if(!$user) {
                 $errors['email'] = ERROR_EMAIL_UNKNOWN;
@@ -45,15 +41,8 @@
                 if(!password_verify($password, $user['password'])) {
                     $errors['password'] = ERROR_PASSWORD_MISMATCH;
                 } else {
-                    $statementSession = $pdo->prepare('INSERT INTO session VALUES (DEFAULT, :userid)');
-                    $statementSession->bindValue(':userid', $user['id']);
-                    $statementSession->execute();
 
-                    // recuperation de l'id de la session qque l'on vient d'entregistrer dans la bdd
-                    $sessionId = $pdo->lastInsertId();
-
-                    // creer notre cookie
-                    setcookie('session', $sessionId, time() + 60 * 60 *24 * 14, '', '', false, true);
+                    $authDAO->login($user['id']);
                     header('Location: /');
                 }
             }
